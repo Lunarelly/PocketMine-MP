@@ -69,7 +69,11 @@ class TypeConverter{
 		$this->itemTypeDictionary = $this->itemTranslator->getDictionary();
 		$this->shieldRuntimeId = $this->itemTypeDictionary->fromStringId("minecraft:shield");
 
-		$this->skinAdapter = new LegacySkinAdapter();
+		if(self::convertProtocol($protocolId) === self::convertProtocol(ProtocolInfo::CURRENT_PROTOCOL)){
+            $this->skinAdapter = new LegacySkinAdapter();
+        }else{
+            $this->skinAdapter = TypeConverter::getInstance()->getSkinAdapter();
+        }
 	}
 
 	public function getBlockTranslator() : BlockTranslator{ return $this->blockTranslator; }
